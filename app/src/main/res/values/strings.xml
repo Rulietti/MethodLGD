@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LGD</string>
+    <string name="dialog_title">Enter value</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Cancel</string>
+
+</resources>
