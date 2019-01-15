@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EnterValueDialog extends DialogFragment implements DialogInterface.OnClickListener {
@@ -61,14 +62,27 @@ public class EnterValueDialog extends DialogFragment implements DialogInterface.
             return;
         }
 
-        String value = editTextDialog.getText().toString();
-        Double value2 = Double.parseDouble(value);
-        Log.v("TAG", "dialog " + value2);
-
-        LGDApplication.getUserList().set(LGDApplication.getPositionValue(), value2);
+        try {
+            String value = editTextDialog.getText().toString();
+            Double userValue = Double.parseDouble(value);
+            checkValue(userValue);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), "Enter numeric value", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Value is wrong", Toast.LENGTH_LONG).show();
+        }
 
         mainActivity.onResume();
 
+    }
+
+    public void checkValue(Double userValue) throws ArrayIndexOutOfBoundsException, NumberFormatException {
+
+        if (LGDApplication.getMatrix().get(LGDApplication.getPositionValue()).equals(userValue)) {
+            LGDApplication.getUserList().set(LGDApplication.getPositionValue(), userValue);
+        }
+        else
+            Toast.makeText(getActivity(), "Value is wrong", Toast.LENGTH_LONG).show();
     }
 
 }

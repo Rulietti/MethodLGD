@@ -3,12 +3,15 @@ package ruslan.reminnyi.metodlgd;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -34,17 +37,32 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Double entity = entityList.get(position);
 
-        if (entityList.get(position).equals(0.0)) {
+        Double entity = entityList.get(position);
+        String value;
+
+        if (entity <= 999999) {
+            Integer intEntity = entity.intValue();
+            value = intEntity.toString();
+        } else
+            value = entity.toString();
+
+        if (LGDApplication.isFlagButtonVisibility()) {
+            holder.linearLayout.setEnabled(false);
+            holder.linearLayout.setClickable(false);
+            if (entityList.get(position).equals(0.0)) {
+                holder.textView.setText("");
+            } else
+                holder.textView.setText(value);
+        } else if (entityList.get(position).equals(0.0)) {
             holder.textView.setText("");
         } else if (!(entityList.get(position).equals(0.0))&(position < 4)) {
-            Integer intEntity = entity.intValue();
-            holder.textView.setText(intEntity.toString());
+//            Integer intEntity = entity.intValue();
+            holder.textView.setText(value);
             holder.linearLayout.setEnabled(false);
             holder.linearLayout.setClickable(false);
         } else if (!(entityList.get(position).equals(0.0))&(position >= 4)) {
-            holder.textView.setText(entity.toString());
+            holder.textView.setText(value);
         }
 
     }
