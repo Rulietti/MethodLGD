@@ -31,7 +31,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Enter roots:"
+            android:text="@string/roots_text_view"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -99,7 +99,7 @@
 
     <Button
         android:id="@+id/button_roots_activity"
-        android:text="Check"
+        android:text="@string/roots_button"
         android:textSize="19sp"
         android:textColor="@color/white_text"
         android:textAllCaps="false"

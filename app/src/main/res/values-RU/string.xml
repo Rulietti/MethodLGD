@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Метод ЛГД</string>
+    <string name="button_start">Начать</string>
+    <string name="button_theory">Теория</string>
+    <string name="dialog_title">Введите значение</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Отмена</string>
+
+    <string name="label_roots">Корни</string>
+    <string name="dialog_toast_empty_value">Вы не ввели значение</string>
+    <string name="toast_not_numeric">Введите числовое значение</string>
+    <string name="dialog_toast_wrong_value">Неверное значение</string>
+    <string name="table_activity_button">Ввести корни</string>
+    <string name="roots_text_view">Введите корни:</string>
+    <string name="roots_button">Проверить</string>
+
+    <string name="not_all_roots">Введите все корни</string>
+    <string name="wrong_roots">Расчет не верный</string>
+
+    <string name="final_activity_text_view">Поздравляем!</string>
+
+</resources>

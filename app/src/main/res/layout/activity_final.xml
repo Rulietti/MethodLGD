@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/text_view_final_activity"
-        android:text="Congratulations!"
+        android:text="@string/final_activity_text_view"
         android:textStyle="bold"
         android:textSize="22sp"
         android:gravity="center"

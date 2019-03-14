@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class Roots extends AppCompatActivity implements View.OnClickListener {
+public class RootsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextX1, editTextX2, editTextX3;
     private Button button;
@@ -21,7 +19,10 @@ public class Roots extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.roots_layout);
+        setContentView(R.layout.activity_roots);
+
+        getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editTextX1 = (EditText) findViewById(R.id.x1_edit_text_roots_layout);
         editTextX2 = (EditText) findViewById(R.id.x2_edit_text_roots_layout);
@@ -49,33 +50,33 @@ public class Roots extends AppCompatActivity implements View.OnClickListener {
                     if (editTextX1.getText() != null & editTextX1.length() > 0) {
                         rightRoot1 = checkRoot(LGDApplication.getX1(), Double.parseDouble(editTextX1.getText().toString()));
                     } else {
-                        Toast.makeText(this, "Enter all roots", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.not_all_roots, Toast.LENGTH_LONG).show();
                         return;
                     }
 
                     if (editTextX2.getText() != null & editTextX2.length() > 0) {
                         rightRoot2 = checkRoot(LGDApplication.getX2(), Double.parseDouble(editTextX2.getText().toString()));
                     } else {
-                        Toast.makeText(this, "Enter all roots", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.not_all_roots, Toast.LENGTH_LONG).show();
                         return;
                     }
 
                     if (editTextX3.getText() != null & editTextX3.length() > 0) {
                         rightRoot3 = checkRoot(LGDApplication.getX3(), Double.parseDouble(editTextX3.getText().toString()));
                     } else {
-                        Toast.makeText(this, "Enter all roots", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.not_all_roots, Toast.LENGTH_LONG).show();
                         return;
                     }
 
                 } catch (NumberFormatException e) {
-                    Toast.makeText(this, "Enter numeric value", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.toast_not_numeric, Toast.LENGTH_LONG).show();
                 }
 
 
                 if (rightRoot1 & rightRoot2 & rightRoot3)
                     startActivity(new Intent(this, FinalActivity.class));
                 else
-                    Toast.makeText(this, "The roots are wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.wrong_roots, Toast.LENGTH_LONG).show();
 
         }
 

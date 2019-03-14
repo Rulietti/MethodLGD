@@ -12,7 +12,7 @@ public class FinalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.final_layout);
+        setContentView(R.layout.activity_final);
 
         textView = (TextView) findViewById(R.id.text_view_final_activity);
     }

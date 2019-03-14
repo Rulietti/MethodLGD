@@ -1,8 +1,22 @@
 <resources>
-    <string name="app_name">LGD</string>
+    <string name="app_name">Method LGD</string>
+    <string name="button_start">Start</string>
+    <string name="button_theory">Theory</string>
     <string name="dialog_title">Enter value</string>
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_cancel">Cancel</string>
 
     <string name="label_roots">Roots</string>
+    <string name="dialog_toast_empty_value">You didn\'t enter value</string>
+    <string name="toast_not_numeric">Enter numeric value</string>
+    <string name="dialog_toast_wrong_value">Value is wrong</string>
+
+    <string name="table_activity_button">Enter roots</string>
+    <string name="roots_text_view">Enter roots:</string>
+    <string name="roots_button">Check</string>
+
+    <string name="not_all_roots">Enter all roots</string>
+    <string name="wrong_roots">The roots are wrong</string>
+
+    <string name="final_activity_text_view">Congratulations!</string>
 </resources>

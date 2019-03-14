@@ -9,17 +9,16 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class EnterValueDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
-    private MainActivity mainActivity;
+    private TableActivity mainActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mainActivity = (MainActivity) context;
+        mainActivity = (TableActivity) context;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class EnterValueDialog extends DialogFragment implements DialogInterface.
         EditText editTextDialog = (EditText) getDialog().findViewById(R.id.edit_text_dialog);
 
         if ((editTextDialog.getText().toString().isEmpty())) {
-            Toast.makeText(getActivity(), "You didn't enter value", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.dialog_toast_empty_value, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -67,9 +66,9 @@ public class EnterValueDialog extends DialogFragment implements DialogInterface.
             Double userValue = Double.parseDouble(value);
             checkValue(userValue);
         } catch (NumberFormatException e) {
-            Toast.makeText(getActivity(), "Enter numeric value", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.toast_not_numeric, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "Value is wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.dialog_toast_wrong_value, Toast.LENGTH_LONG).show();
         }
 
         mainActivity.onResume();
@@ -82,7 +81,7 @@ public class EnterValueDialog extends DialogFragment implements DialogInterface.
             LGDApplication.getUserList().set(LGDApplication.getPositionValue(), userValue);
         }
         else
-            Toast.makeText(getActivity(), "Value is wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.dialog_toast_wrong_value, Toast.LENGTH_LONG).show();
     }
 
 }
