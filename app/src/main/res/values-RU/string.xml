@@ -18,6 +18,4 @@
     <string name="not_all_roots">Введите все корни</string>
     <string name="wrong_roots">Расчет не верный</string>
 
-    <string name="final_activity_text_view">Поздравляем!</string>
-
 </resources>

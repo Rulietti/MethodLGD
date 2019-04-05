@@ -14,18 +14,22 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ruslan Reminnyi
+ * @version 1.0
+ */
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    /* Grid adapter */
 
     private List<Double> entityList;
     private LayoutInflater inflater;
     private ItemClickListener mClickListener;
-    private Context context;
+//    private Context context;
 
     RecyclerViewAdapter(Context context, List entityList) {
         this.inflater = LayoutInflater.from(context);
         this.entityList = entityList;
-        this.context = context;
-
+//        this.context = context;
     }
 
     @Override
@@ -41,26 +45,34 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         Double entity = entityList.get(position);
         String value;
 
-        if (entity <= 999999) {
+        if (entity <= 9999999) {    // If number less 8 signs it will display as integer (without .0)
             Integer intEntity = entity.intValue();
             value = intEntity.toString();
-        } else
+        } else {                   // Differently as it is
             value = entity.toString();
+        }
 
-        if (LGDApplication.isFlagButtonVisibility()) {
+        if (LGDApplication.isFlagButtonVisibility()) {    // If user filled out the matrix
             holder.linearLayout.setEnabled(false);
             holder.linearLayout.setClickable(false);
             if (entityList.get(position).equals(0.0)) {
                 holder.textView.setText("");
-            } else
+            } else {
                 holder.textView.setText(value);
+            }
         } else if (entityList.get(position).equals(0.0)) {
+            /* Extra elements of the list will be empty in the table */
+
             holder.textView.setText("");
         } else if (!(entityList.get(position).equals(0.0))&(position < 4)) {
-//            Integer intEntity = entity.intValue();
-            holder.textView.setText(value);
+            /*
+             * User cannot change the first row of the table
+             * because it fills out automatically
+             */
+
             holder.linearLayout.setEnabled(false);
             holder.linearLayout.setClickable(false);
+            holder.textView.setText(value);
         } else if (!(entityList.get(position).equals(0.0))&(position >= 4)) {
             holder.textView.setText(value);
         }
@@ -90,7 +102,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         }
     }
 
-    public long getItemId(int i) {      // возвращает id item'a
+    public long getItemId(int i) {
         return i;
     }
 

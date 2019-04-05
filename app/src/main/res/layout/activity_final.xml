@@ -7,13 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_view_final_activity"
-        android:text="@string/final_activity_text_view"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:gravity="center"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/congratulations"
+        android:layout_width="250dp"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

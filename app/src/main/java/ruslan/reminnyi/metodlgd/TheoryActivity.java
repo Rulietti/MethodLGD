@@ -18,18 +18,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @author Ruslan Reminnyi
+ * @version 1.0
+ */
 public class TheoryActivity extends AppCompatActivity implements View.OnClickListener {
+    /* The activity shows pdf-file with theory */
 
     private ImageView imageViewPdf;
     private FloatingActionButton prePageButton;
     private FloatingActionButton nextPageButton;
 
-    private static final String FILENAME = "theory.pdf";
-
-    private int pageIndex;
     private PdfRenderer pdfRenderer;
     private PdfRenderer.Page currentPage;
     private ParcelFileDescriptor parcelFileDescriptor;
+
+    private static final String FILENAME = "theory.pdf";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,27 +48,33 @@ public class TheoryActivity extends AppCompatActivity implements View.OnClickLis
         nextPageButton = (FloatingActionButton) findViewById(R.id.next_page_button);
         prePageButton.setOnClickListener(this);
         nextPageButton.setOnClickListener(this);
-
-        pageIndex = 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onStart() {
         super.onStart();
+
         try {
-            openRenderer(this);
-            showPage(pageIndex);
+            openRenderer(this);    // initialization renderer
+            showPage(0);    // at the beginning the first page will open
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onStop() {
+        // cleaning the resources
+
         try {
-            closeRenderer();
+            if (currentPage != null) {
+                currentPage.close();
+            }
+            pdfRenderer.close();
+            parcelFileDescriptor.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,6 +107,7 @@ public class TheoryActivity extends AppCompatActivity implements View.OnClickLis
             asset.close();
             output.close();
         }
+
         parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
         if (parcelFileDescriptor != null) {
             pdfRenderer = new PdfRenderer(parcelFileDescriptor);
@@ -104,46 +115,35 @@ public class TheoryActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void closeRenderer() throws IOException {
-        if (null != currentPage) {
-            currentPage.close();
-        }
-        pdfRenderer.close();
-        parcelFileDescriptor.close();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void showPage(int index) {
+
         if (pdfRenderer.getPageCount() <= index) {
             return;
         }
-        if (null != currentPage) {
+
+        if (currentPage != null) {
             currentPage.close();
         }
+
         currentPage = pdfRenderer.openPage(index);
 
         Bitmap bitmap = Bitmap.createBitmap(currentPage.getWidth(), currentPage.getHeight(),
                 Bitmap.Config.ARGB_8888);
 
-        currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+        currentPage.render(bitmap, null, null
+                , PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
         imageViewPdf.setImageBitmap(bitmap);
+
         updateUi();
     }
 
-    /**
-     * Updates the state of 2 control buttons in response to the current page index.
-     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void updateUi() {
-        int index = currentPage.getIndex();
-        int pageCount = pdfRenderer.getPageCount();
-        prePageButton.setEnabled(0 != index);
-        nextPageButton.setEnabled(index + 1 < pageCount);
-    }
+        // updates the state of 2 control buttons in response to the current page index
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public int getPageCount() {
-        return pdfRenderer.getPageCount();
+        prePageButton.setEnabled(currentPage.getIndex() > 0);
+        nextPageButton.setEnabled(currentPage.getIndex() + 1 < pdfRenderer.getPageCount());
     }
 
 }

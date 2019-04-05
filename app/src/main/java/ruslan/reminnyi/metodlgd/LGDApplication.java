@@ -1,38 +1,100 @@
 package ruslan.reminnyi.metodlgd;
 
 import android.app.Application;
-import android.util.Log;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Ruslan Reminnyi
+ * @version 1.0
+ */
 public class LGDApplication extends Application {
 
-    private static List<Double> userList;
-    private static Integer positionValue;
-    private ArrayList<Equation> equationsList = new ArrayList<>();
-    private Double a, b, c, d;
-    private static int counterRow;
+    /**
+     * equationsList contains coefficients of the equations
+     */
+    private static ArrayList<Equation> equationsList;
+
+    /**
+     * A first coefficient of the equation
+     * */
+    private static Double A;
+
+    /**
+     * B second coefficient of the equation
+     * */
+    private static Double B;
+
+    /**
+     * C third coefficient of the equation
+     * */
+    private static Double C;
+
+    /**
+     * D fourth coefficient of the equation
+     * */
+    private static Double D;
+
+    /**
+     * matrix values of the matrix
+     */
     private static List<Double> matrix;
-    private static Double X1, X2, X3;
-    Double result1 = 0.0, result2 = 0.0, result3 = 0.0;
-    private static boolean flagButtonVisibility;
+
+    /**
+     * counterRow amount rows of the matrix
+     */
+    private static int counterRow;
+
+    /**
+     * X1 first root of the equation
+     */
+    private static Double X1;
+
+    /**
+     * X2 second root of the equation
+     */
+    private static Double X2;
+
+    /**
+     * X3 third root of the equation
+     */
+    private static Double X3;
+
+    /**
+     * stringEquation full equation
+     */
     private static String stringEquation;
+
+    /**
+     * userList values which user entered
+     */
+    private static List<Double> userList;
+
+    /**
+     * positionValue index of the current cell of the table
+     */
+    private static Integer positionValue;
+
+    /**
+     * flagButtonVisibility visibility of the button
+     */
+    private static boolean flagButtonVisibility;
+//    private Double result1 = 0.0, result2 = 0.0, result3 = 0.0;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         Random rand = new Random();
-        int r = rand.nextInt(29 + 1) + 0;
-
+        int r = rand.nextInt(29 + 1) + 0;    // for random equation
 
         positionValue = 0;
 
+        equationsList = new ArrayList<>();
         equationsList.add(new Equation(-9, 2, 7, 1));
         equationsList.add(new Equation(1, -6, -4, 2));
         equationsList.add(new Equation(1, 3, -9, -6));
@@ -64,61 +126,61 @@ public class LGDApplication extends Application {
         equationsList.add(new Equation(-6, -7, 9, 3));
         equationsList.add(new Equation(6, -6, -3, 2));
 
-        a = (double) equationsList.get(r).getA();
-        b = (double) equationsList.get(r).getB();
-        c = (double) equationsList.get(r).getC();
-        d = (double) equationsList.get(r).getD();
+        A = (double) equationsList.get(r).getA();    // first coefficient
+        B = (double) equationsList.get(r).getB();    // second coefficient
+        C = (double) equationsList.get(r).getC();    // third coefficient
+        D = (double) equationsList.get(r).getD();    // fourth coefficient
 
         matrix = new ArrayList<>();
-        matrix.add(a);
-        matrix.add(b);
-        matrix.add(c);
-        matrix.add(d);
-
-        userList = new ArrayList<>();
-        userList.add(a);
-        userList.add(b);
-        userList.add(c);
-        userList.add(d);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-        userList.add(0.0);
-
-        stringEquation = equationToString(a, b, c, d);
+        matrix.add(A);
+        matrix.add(B);
+        matrix.add(C);
+        matrix.add(D);
 
         counterRow = createMatrix(matrix);
+
+        stringEquation = equationToString(A, B, C, D);
 
         X1 = calculateRoots(1);
         X2 = calculateRoots(2);
         X3 = calculateRoots(3);
 
-        result1 = substitutionRootToEquation(X1);
-        result2 = substitutionRootToEquation(X2);
-        result3 = substitutionRootToEquation(X3);
-        Log.v("TAG", "result1 " + result1);
-        Log.v("TAG", "result2 " + result2);
-        Log.v("TAG", "result3 " + result3);
+        userList = new ArrayList<>();
+        userList.add(A);
+        userList.add(B);
+        userList.add(C);
+        userList.add(D);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+        userList.add(0.0);
+
+//        result1 = substitutionRootToEquation(X1);
+//        result2 = substitutionRootToEquation(X2);
+//        result3 = substitutionRootToEquation(X3);
+//        Log.v("TAG", "result1 " + result1);
+//        Log.v("TAG", "result2 " + result2);
+//        Log.v("TAG", "result3 " + result3);
 
     }
 
@@ -126,6 +188,15 @@ public class LGDApplication extends Application {
         return userList;
     }
 
+    /**
+     * to display equation
+     *
+     * @param a first coefficient
+     * @param b second coefficient
+     * @param c third coefficient
+     * @param d fourth coefficient
+     * @return full string equation
+     */
     public static String equationToString(Double a, Double b, Double c, Double d) {
         StringBuilder stringBuilder = new StringBuilder();
         int tempA, tempB, tempC, tempD;
@@ -175,13 +246,25 @@ public class LGDApplication extends Application {
     public static void setPositionValue(Integer t) { positionValue = t; }
     public static Integer getPositionValue() { return positionValue; }
 
-    public static Double roundValueMatrix(Double temp) {
+    /**
+     * to round value to 4 signs
+     *
+     * @param temp full value
+     * @return round value
+     */
+    public static Double roundValue(Double temp) {
         BigDecimal bigDecimal = new BigDecimal(temp);
         bigDecimal = bigDecimal.round(new MathContext(4));
 
         return bigDecimal.doubleValue();
     }
 
+    /**
+     * creating matrix
+     *
+     * @param matrix list for values of the matrix
+     * @return amount of rows of the matrix
+     */
     public static int createMatrix(List<Double> matrix) {
         boolean stopMatrix = false;
         Double a=0.0, b=0.0, c=0.0, d=0.0;
@@ -197,29 +280,31 @@ public class LGDApplication extends Application {
                 switch (i) {
                     case 0:
                         temp = matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4);
-                        a = roundValueMatrix(temp);
+                        a = roundValue(temp);
                         matrix.add(a);
                         break;
                     case 1:
-                        temp = (matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)) - 2 * matrix.get(currentIndex - 5) * matrix.get(currentIndex - 3);
-                        b = roundValueMatrix(temp);
+                        temp = roundValue((matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))
+                                - roundValue(2 * matrix.get(currentIndex - 5) * matrix.get(currentIndex - 3));
+                        b = roundValue(temp);
                         matrix.add(b);
-                        if (b.equals(roundValueMatrix(matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))) {
+                        if (b.equals(roundValue(matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))) {
                             stopMatrix = true;
                         }
                         break;
                     case 2:
-                        temp = (matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)) - 2 * matrix.get(currentIndex - 5) * matrix.get(currentIndex - 3);
-                        c = roundValueMatrix(temp);
+                        temp = roundValue((matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))
+                                - roundValue(2 * matrix.get(currentIndex - 5) * matrix.get(currentIndex - 3));
+                        c = roundValue(temp);
                         matrix.add(c);
 
-                        if (c.equals(roundValueMatrix(matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))) {
+                        if (c.equals(roundValue(matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4)))) {
                             stopMatrix = true;
                         }
                         break;
                     case 3:
                         temp = matrix.get(currentIndex - 4) * matrix.get(currentIndex - 4);
-                        d = roundValueMatrix(temp);
+                        d = roundValue(temp);
                         matrix.add(d);
                         break;
                 }
@@ -234,9 +319,15 @@ public class LGDApplication extends Application {
         return matrix;
     }
 
+    /**
+     * calculating root
+     *
+     * @param numberRoot number of the root from 1 till 3
+     * @return root with a correct sign
+     */
     public static Double calculateRoots(int numberRoot) {
         Double power = 1 / (Math.pow(2, counterRow));
-        Double resultWithPositiveRoot, resultWithNegativeRoot, sign = 0.0;
+        Double resultWithPositiveRoot, resultWithNegativeRoot, signRoot = 0.0;
 
         int sizeMatrix = matrix.size();
         Double x = 0.0;
@@ -266,22 +357,24 @@ public class LGDApplication extends Application {
                 + matrix.get(3);
 
         if ((resultWithPositiveRoot < 0.1) & (resultWithPositiveRoot > -0.1)) {
-            sign = root;
+            /* if substitution positive root to the equation is about 0 */
+            signRoot = root;
         } else if ((resultWithNegativeRoot < 0.1) & (resultWithNegativeRoot > -0.1)) {
-            sign = -root;
+            /* if substitution negative root to the equation is about 0 */
+            signRoot = -root;
         }
 
-        return sign;
+        return signRoot;
     }
 
-    public static Double substitutionRootToEquation(Double root) {
-        Double r = (matrix.get(0) * Math.pow(root, 3))
-                + (matrix.get(1) * Math.pow(root, 2))
-                + (matrix.get(2) * root)
-                + matrix.get(3);
-
-        return roundValueMatrix(r);
-    }
+//    public static Double substitutionRootToEquation(Double root) {
+//        Double r = (matrix.get(0) * Math.pow(root, 3))
+//                + (matrix.get(1) * Math.pow(root, 2))
+//                + (matrix.get(2) * root)
+//                + matrix.get(3);
+//
+//        return roundValue(r);
+//    }
 
     public static Double getX1() {
         return X1;
@@ -295,6 +388,12 @@ public class LGDApplication extends Application {
         return X3;
     }
 
+    /**
+     * checking of filling the matrix out
+     *
+     * @return true if user filled out all cells of the matrix
+     *         false if user did not fill out all cells of the matrix
+     */
     public static boolean matchMatrix() {
         for (int i = 0; i < matrix.size(); i++) {
             if (userList.get(i).equals(0.0)) {

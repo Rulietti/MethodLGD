@@ -11,14 +11,19 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * @author Ruslan Reminnyi
+ * @version 1.0
+ */
 public class EnterValueDialog extends DialogFragment implements DialogInterface.OnClickListener {
+    /* The activity for enter value of the matrix */
 
-    private TableActivity mainActivity;
+    private TableActivity tableActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mainActivity = (TableActivity) context;
+        tableActivity = (TableActivity) context;
     }
 
     @Override
@@ -71,17 +76,25 @@ public class EnterValueDialog extends DialogFragment implements DialogInterface.
             Toast.makeText(getActivity(), R.string.dialog_toast_wrong_value, Toast.LENGTH_LONG).show();
         }
 
-        mainActivity.onResume();
+        tableActivity.onResume();    // to update the adapter
 
     }
 
-    public void checkValue(Double userValue) throws ArrayIndexOutOfBoundsException, NumberFormatException {
+    /**
+     * if user entered a correct value then writes value to user matrix
+     * if user entered a wrong value then reports about it
+     *
+     * @param userValue value which user entered
+     */
+    public void checkValue(Double userValue)
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
 
         if (LGDApplication.getMatrix().get(LGDApplication.getPositionValue()).equals(userValue)) {
             LGDApplication.getUserList().set(LGDApplication.getPositionValue(), userValue);
-        }
-        else
+        } else {
             Toast.makeText(getActivity(), R.string.dialog_toast_wrong_value, Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }
